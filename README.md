@@ -10,7 +10,6 @@ runs on the console. Randomizer logic is ported from ChaoticBrave's
 [VagrantStoryRandomizer](https://github.com/ChaoticBrave/VagrantStoryRandomizer).
 Addresses and structs come from [Rood Reverse](https://github.com/ser-pounce/rood-reverse) (CC0).
 
-Not for distribution without ChaoticBrave's permission.
 
 ## Using the randomizer
 
