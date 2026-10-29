@@ -399,7 +399,7 @@ static void footer(void)
     static const char date[] = __DATE__; /* "Mmm dd yyyy" */
 
     text(0, LAST_LINE, date, WHITE);
-    text(RIGHT_COLUMN, LAST_LINE, "VS Integrated", WHITE);
+    text(RIGHT_COLUMN, LAST_LINE, "VSI Rando v" RANDO_VERSION, WHITE);
 }
 
 static void drawMain(const menu_t* m)

@@ -5,6 +5,7 @@ OBJCOPY   := $(PREFIX)objcopy
 NM        := $(PREFIX)nm
 
 VANILLA   ?= reference/Vagrant Story (USA).bin
+VERSION   := 0.1b
 
 # Zenith edition (`make zenith`): the same randomizer built on top of Vagrant
 # Story Zenith 1.94, as two PPFs: one for Zenith, one for Zenith + the Rood
@@ -31,7 +32,7 @@ OVERLAY   := src/battle
 
 CFLAGS := -O2 -G0 -march=r3000 -mabi=32 -mno-abicalls -fno-pic -msoft-float \
           -ffreestanding -fno-builtin -nostdlib -fno-common -Wall -Wextra -Werror \
-          -Wno-unused-parameter -Wno-missing-field-initializers -fwrapv -std=gnu11 $(EDITION_CFLAGS)
+          -Wno-unused-parameter -Wno-missing-field-initializers -fwrapv -std=gnu11 $(EDITION_CFLAGS) -DRANDO_VERSION='"$(VERSION)"'
 ASFLAGS := -march=r3000 -mabi=32 -mno-abicalls -fno-pic -G0
 
 SRCS := $(wildcard $(PAYLOAD)/*.c)
@@ -39,11 +40,21 @@ ASMS := $(wildcard $(PAYLOAD)/*.s)
 OBJS := $(patsubst $(PAYLOAD)/%.c,$(BUILD)/payload/%.o,$(SRCS)) $(patsubst $(PAYLOAD)/%.s,$(BUILD)/payload/%.o,$(ASMS)) \
         $(BUILD)/payload/equipment.o $(BUILD)/payload/keyrooms.o
 
-.PHONY: all clean test smoke zenith
+.PHONY: all clean test smoke zenith release
 all: $(PPFS)
 
 zenith:
 	$(MAKE) EDITION=zenith
+
+# Both editions, renamed with the version, in build/release/.
+release:
+	$(MAKE)
+	$(MAKE) EDITION=zenith
+	mkdir -p build/release
+	cp build/VSIntegratedRando.ppf build/release/VSIntegratedRando-v$(VERSION).ppf
+	cp build/zenith/VSIntegratedRando-Zenith.ppf build/release/VSIntegratedRando-Zenith-v$(VERSION).ppf
+	cp build/zenith/VSIntegratedRando-Zenith-QoL.ppf build/release/VSIntegratedRando-Zenith-QoL-v$(VERSION).ppf
+	cd build/release && sha1sum *.ppf > SHA1SUMS
 
 $(BUILD)/payload/%.o: $(PAYLOAD)/%.c $(wildcard $(PAYLOAD)/*.h) Makefile | $(BUILD)/payload
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -121,7 +132,7 @@ PATCH_DEPS := $(BUILD)/payload.bin $(BUILD)/payload.sym $(BUILD)/menu.bin $(BUIL
 # build.py BASE EDITION OUT-BIN OUT-PPF
 build_patch = python3 -I tools/build.py --base "$(1)" --edition $(2) --payload $(BUILD)/payload.bin \
 	--symbols $(BUILD)/payload.sym --menu $(BUILD)/menu.bin --menu-symbols $(BUILD)/menu.sym \
-	--overlay $(BUILD)/battle.bin --out-bin $(3) --out-ppf $(4) $(BUILD_ARGS)
+	--overlay $(BUILD)/battle.bin --out-bin $(3) --out-ppf $(4) --version $(VERSION) $(BUILD_ARGS)
 
 $(BUILD)/VSIntegratedRando.ppf: $(PATCH_DEPS)
 	$(call build_patch,$(VANILLA),vanilla,$(BUILD)/VSIntegratedRando.bin,$@)

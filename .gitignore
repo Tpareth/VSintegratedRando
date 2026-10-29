@@ -4,8 +4,9 @@
 # Build output (includes full ~750 MB disc images).
 /build/
 
-# Personal test notes.
+# Personal test notes and session handoff notes.
 /scratchpad.md
+/docs/HANDOFF.md
 
 # Python bytecode.
 __pycache__/

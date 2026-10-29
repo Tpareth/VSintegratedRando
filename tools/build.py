@@ -164,6 +164,7 @@ def main():
     ap.add_argument('--overlay', required=True)
     ap.add_argument('--out-bin', required=True)
     ap.add_argument('--out-ppf', required=True)
+    ap.add_argument('--version', default='dev')
     args = ap.parse_args()
 
     vanilla = Path(args.base).read_bytes()  # the base image the PPF applies to
@@ -210,7 +211,8 @@ def main():
     Path(args.out_bin).write_bytes(out)
     Path(args.out_bin).with_suffix('.cue').write_text(
         f'FILE "{Path(args.out_bin).name}" BINARY\n  TRACK 01 MODE2/2352\n    INDEX 01 00:00:00\n')
-    title = 'Vagrant Story Integrated Randomizer' + ('' if base == 'vanilla' else f' for {BASE_NAMES[base]}')
+    title = f'VS Integrated Randomizer v{args.version}' + {'vanilla': '', 'zenith': ' for Zenith 1.94',
+                                                            'zenith-qol': ' for Zenith 1.94+QoL'}[base]
     ppf.create(vanilla, out, title[:50], args.out_ppf)
 
     # Verify: the patch reproduces the image and the relocated exe reads back.

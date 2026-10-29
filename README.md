@@ -165,12 +165,24 @@ options differ from the standard edition:
 - Everything else (chests, enemies, Ashley, keys and progress, Ability Learning and Ability
   Timing) works as in the standard edition, on top of Zenith's own changes.
 
+## Credits
+
+- **ChaoticBrave**: the original [Vagrant Story Randomizer](https://github.com/ChaoticBrave/VagrantStoryRandomizer),
+  whose rules this ports.
+- **MottZilla**: the [SotN Integrated Randomizer](https://github.com/MottZilla/SotN_Integrated_Rando),
+  the model for this project.
+- **ser-pounce and contributors**: the [Rood Reverse](https://github.com/ser-pounce/rood-reverse)
+  decompilation (CC0), the source of the game addresses and structures used here.
+- **eremtsov**: the [Rood Reverse QoL mod](https://github.com/eremtsov/rood-reverse/blob/qol-mod/MOD.md).
+- **the_eyes**: [Vagrant Story Zenith](https://vszenith.wordpress.com/).
+
 ## Building
 
 ```sh
 tools/build_toolchain.sh   # once: mipsel-none-elf GCC + binutils + armips into ~/.local/opt/psx
 make                       # -> build/VSIntegratedRando.ppf (and the patched .bin)
 make zenith                # -> build/zenith/VSIntegratedRando-Zenith.ppf and -Zenith-QoL.ppf
+make release               # both editions, versioned, with SHA1SUMS, in build/release/
 make test                  # host-side randomizer tests
 ```
 
