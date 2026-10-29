@@ -1,5 +1,9 @@
 # Vagrant Story Integrated Randomizer
 
+> **Note:** This project was developed with the help of AI tools, under human direction and
+> play-testing. Mentioning it up front so anyone who prefers to avoid AI-assisted projects
+> knows before diving in.
+
 An on-disc randomizer for Vagrant Story (USA), distributed as a PPF patch, in the style of
 MottZilla's SotN Integrated Rando: the seed and options are chosen in-game and randomization
 runs on the console. Randomizer logic is ported from ChaoticBrave's
