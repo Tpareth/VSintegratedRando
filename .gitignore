@@ -1,0 +1,12 @@
+# Game images, other mods' patches and the PC randomizer release: not ours to commit.
+/reference/
+
+# Build output (includes full ~750 MB disc images).
+/build/
+
+# Personal test notes.
+/scratchpad.md
+
+# Python bytecode.
+__pycache__/
+*.pyc
